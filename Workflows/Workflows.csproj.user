@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SharePointSiteUrl>http://spf2010/sites/rawcom/</SharePointSiteUrl>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BB1F664B-9266-4fd6-B973-E1E44974B511}">
+        <ProjectItemStore Id="{5ce30227-7246-4b0e-91a9-5f7c85ca32a7}">
+          <DisplayName>Wyślij zestawienie godzin</DisplayName>
+          <HistoryList>Workflow History</HistoryList>
+          <HistoryListGuid>{37a9683b-78f1-458c-b06f-cee3c1e16f64}</HistoryListGuid>
+          <TaskList>tabCrmTasks</TaskList>
+          <TaskListGuid>{0ccd1da9-c994-4b99-9bfe-ddc5633b40de}</TaskListGuid>
+          <AutoAssociate>false</AutoAssociate>
+          <ManualStart>true</ManualStart>
+        </ProjectItemStore>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

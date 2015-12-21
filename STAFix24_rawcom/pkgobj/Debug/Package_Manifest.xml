@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="4add3cef-cd84-4af6-b118-68ba0667ed5d" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="STAFix24.rawcom.BLL.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.Tools.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.DAL.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.Workflows.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <FeatureManifests>
+    <FeatureManifest Location="STAFix24_rawcom_Workflows\Feature.xml" />
+    <FeatureManifest Location="STAFix24_rawcom_TimerJob_WyslijZestawienieGodzin\Feature.xml" />
+  </FeatureManifests>
+</Solution>

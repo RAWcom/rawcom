@@ -1,0 +1,4 @@
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\bin\Debug\STAFix24.rawcom.Tools.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\bin\Debug\STAFix24.rawcom.Tools.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\obj\Debug\STAFix24.rawcom.Tools.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\obj\Debug\STAFix24.rawcom.Tools.pdb
