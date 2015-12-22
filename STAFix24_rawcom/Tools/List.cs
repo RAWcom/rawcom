@@ -127,6 +127,11 @@ namespace Tools
             else return _EMPTY_MARKER_;
         }
 
+        public static string Format_String(String s)
+        {
+            return Microsoft.SharePoint.Utilities.SPHttpUtility.HtmlEncode(s);
+        }
+
         public static string Format_Date(DateTime d)
         {
             if (d != null) return d.ToShortDateString();

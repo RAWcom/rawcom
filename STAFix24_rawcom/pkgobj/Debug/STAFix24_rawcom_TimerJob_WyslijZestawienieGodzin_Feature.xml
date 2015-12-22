@@ -1,2 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Title="STAFix24_rawcom_TimerJob Wyślij zestawienie godzin" Id="8094a9a5-dfd8-4786-8e20-9357437e29fc" ReceiverAssembly="STAFix24.rawcom, Version=1.0.0.0, Culture=neutral, PublicKeyToken=80e520f9f7de9e38" ReceiverClass="STAFix24_rawcom.Features.TimerJob_WyslijZestawienieGodzin.TimerJob_WyslijZestawienieGodzinEventReceiver" Scope="Web"></Feature>

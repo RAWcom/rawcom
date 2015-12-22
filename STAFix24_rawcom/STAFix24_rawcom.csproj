@@ -50,17 +50,18 @@
     <Reference Include="Microsoft.SharePoint.Security" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\TimerJob_WyslijZestawienieGodzin\TimerJob_WyslijZestawienieGodzin.EventReceiver.cs">
-      <DependentUpon>TimerJob_WyslijZestawienieGodzin.feature</DependentUpon>
+    <Compile Include="Features\TimerJobs\TimerJobs.EventReceiver.cs">
+      <DependentUpon>TimerJobs.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Workflows\Workflows.EventReceiver.cs">
       <DependentUpon>Workflows.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimerJobs\WyslijZestawienieGodzinTJ.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Features\TimerJob_WyslijZestawienieGodzin\TimerJob_WyslijZestawienieGodzin.feature">
-      <FeatureId>{99ae2a0b-a980-4279-8767-20d2bd218bba}</FeatureId>
+    <None Include="Features\TimerJobs\TimerJobs.feature">
+      <FeatureId>{d5a0640b-6560-40d4-aa14-17d823f8c99b}</FeatureId>
     </None>
     <None Include="Features\Workflows\Workflows.feature">
       <FeatureId>{8996ad4d-bbb1-44b1-a0b6-a0ac0116c2b9}</FeatureId>
@@ -73,12 +74,10 @@
       <DependentUpon>Package.package</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="TimerJobs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Features\TimerJob_WyslijZestawienieGodzin\TimerJob_WyslijZestawienieGodzin.Template.xml">
-      <DependentUpon>TimerJob_WyslijZestawienieGodzin.feature</DependentUpon>
+    <Content Include="Features\TimerJobs\TimerJobs.Template.xml">
+      <DependentUpon>TimerJobs.feature</DependentUpon>
     </Content>
     <Content Include="Features\Workflows\Workflows.Template.xml">
       <DependentUpon>Workflows.feature</DependentUpon>

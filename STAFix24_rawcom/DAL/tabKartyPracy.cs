@@ -18,9 +18,9 @@ namespace DAL
         {
             return web.Lists.TryGetList(targetList).Items.Cast<SPListItem>()
                 .Where(i => i.ContentType.Name.Equals(_CT_KARTA_PRACY_)
-                            & Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
-                            & Tools.Lists.Get_Date(i, "colData").Year.Equals(targetDate.Year)
-                            & Tools.Lists.Get_Date(i, "colData").Month.Equals(targetDate.Month))
+                            && Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
+                            && Tools.Lists.Get_Date(i, "colData").Year.Equals(targetDate.Year)
+                            && Tools.Lists.Get_Date(i, "colData").Month.Equals(targetDate.Month))
                 .ToArray();
         }
 
@@ -30,9 +30,9 @@ namespace DAL
 
             return web.Lists.TryGetList(targetList).Items.Cast<SPListItem>()
                 .Where(i => i.ContentType.Name.Equals(_CT_KARTA_PRACY_)
-                            & Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
-                            & Tools.Lists.Get_Date(i, "colData") >= startDate
-                            & Tools.Lists.Get_Date(i, "colData") <= targetDate)
+                            && Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
+                            && Tools.Lists.Get_Date(i, "colData") >= startDate
+                            && Tools.Lists.Get_Date(i, "colData") <= targetDate)
                             .ToArray();
         }
 
@@ -40,8 +40,8 @@ namespace DAL
         {
             return web.Lists.TryGetList(targetList).Items.Cast<SPListItem>()
                 .Where(i => i.ContentType.Name.Equals(_CT_KARTA_PRACY_)
-                            & Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
-                            & Tools.Lists.Get_Date(i, "colData").Equals(targetDate))
+                            && Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
+                            && Tools.Lists.Get_Date(i, "colData").Equals(targetDate))
                             .ToArray();
         }
 

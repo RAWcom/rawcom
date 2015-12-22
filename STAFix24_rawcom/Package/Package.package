@@ -7,6 +7,6 @@
   </assemblies>
   <features>
     <featureReference itemId="8996ad4d-bbb1-44b1-a0b6-a0ac0116c2b9" />
-    <featureReference itemId="99ae2a0b-a980-4279-8767-20d2bd218bba" />
+    <featureReference itemId="d5a0640b-6560-40d4-aa14-17d823f8c99b" />
   </features>
 </package>

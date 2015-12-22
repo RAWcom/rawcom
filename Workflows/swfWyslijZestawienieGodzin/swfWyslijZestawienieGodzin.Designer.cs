@@ -26,16 +26,13 @@ namespace Workflows.swfWyslijZestawienieGodzin
         private void InitializeComponent()
         {
             this.CanModifyActivities = true;
+            System.Workflow.Activities.CodeCondition codecondition1 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind1 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind2 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind3 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind4 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind5 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind6 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.CodeCondition codecondition1 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind7 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind8 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind9 = new System.Workflow.ComponentModel.ActivityBind();
@@ -43,6 +40,9 @@ namespace Workflows.swfWyslijZestawienieGodzin
             System.Workflow.ComponentModel.ActivityBind activitybind10 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind11 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind12 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
@@ -52,8 +52,9 @@ namespace Workflows.swfWyslijZestawienieGodzin
             System.Workflow.ComponentModel.ActivityBind activitybind18 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind19 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.Activities.CodeCondition codecondition6 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.ComponentModel.ActivityBind activitybind21 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind20 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind22 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind21 = new System.Workflow.ComponentModel.ActivityBind();
             this.cmdPrzygotujTresc_P_D = new System.Workflow.Activities.CodeActivity();
             this.cmdUstawTytulSekcji_P_D = new System.Workflow.Activities.CodeActivity();
             this.cmdPrzygotujTresc_P_T = new System.Workflow.Activities.CodeActivity();
@@ -73,34 +74,33 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.cmdAktualizujSygnature_TrybTestowy = new System.Workflow.Activities.CodeActivity();
             this.cmdZmodyfikujOdiorcow = new System.Workflow.Activities.CodeActivity();
             this.cmdAktualizujSygnature = new System.Workflow.Activities.CodeActivity();
+            this.RaportowanieWynikuDlaProjektu = new System.Workflow.Activities.SequenceActivity();
+            this.Else_TrybTestowy = new System.Workflow.Activities.IfElseBranchActivity();
+            this.ifTrybProdukcyjny = new System.Workflow.Activities.IfElseBranchActivity();
+            this.whileProjekt = new System.Workflow.Activities.WhileActivity();
             this.logRodzajRaportuS3 = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.cmdPrzygotujTresc_S_D = new System.Workflow.Activities.CodeActivity();
             this.logRodzajRaportuS2 = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.cmdPrzygotujTresc_S_T = new System.Workflow.Activities.CodeActivity();
             this.logRodzajRaportuS = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.cmdPrzygotujTresc_S_M = new System.Workflow.Activities.CodeActivity();
-            this.RaportowanieWynikuDlaProjektu = new System.Workflow.Activities.SequenceActivity();
-            this.Else_TrybTestowy = new System.Workflow.Activities.IfElseBranchActivity();
-            this.ifTrybProdukcyjny = new System.Workflow.Activities.IfElseBranchActivity();
-            this.ifRaport_S_Dzienny = new System.Workflow.Activities.IfElseBranchActivity();
-            this.ifRaport_S_Tygodniowy = new System.Workflow.Activities.IfElseBranchActivity();
-            this.ifRaport_S_Miesieczny = new System.Workflow.Activities.IfElseBranchActivity();
-            this.whileProjekt = new System.Workflow.Activities.WhileActivity();
+            this.cmdUpdateAdminReport = new System.Workflow.Activities.CodeActivity();
             this.logWiadomoscWyslana = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.sendRaportDoKlienta = new Microsoft.SharePoint.WorkflowActions.SendEmail();
             this.OkreśćTrybPracy = new System.Workflow.Activities.IfElseActivity();
             this.cmdPrzygotujWiadomosc = new System.Workflow.Activities.CodeActivity();
-            this.OkreślRodzajRaportu_S = new System.Workflow.Activities.IfElseActivity();
             this.sekObsługaProjektu = new System.Workflow.Activities.SequenceActivity();
             this.cmdListaProjektowByKlient = new System.Workflow.Activities.CodeActivity();
+            this.ifRaport_S_Dzienny = new System.Workflow.Activities.IfElseBranchActivity();
+            this.ifRaport_S_Tygodniowy = new System.Workflow.Activities.IfElseBranchActivity();
+            this.ifRaport_S_Miesieczny = new System.Workflow.Activities.IfElseBranchActivity();
             this.ifTrescDoWyslania = new System.Workflow.Activities.IfElseBranchActivity();
-            this.sequenceActivity1 = new System.Workflow.Activities.SequenceActivity();
-            this.seqRozliczenieGodzinSerwisowych = new System.Workflow.Activities.SequenceActivity();
-            this.seqRozliczenieGodzinProjektowych = new System.Workflow.Activities.SequenceActivity();
+            this.RozliczenieGodzinProjektowych = new System.Workflow.Activities.SequenceActivity();
+            this.OkreślRodzajRaportu_S = new System.Workflow.Activities.IfElseActivity();
             this.logErrorMessage = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.cmdErrorHandler = new System.Workflow.Activities.CodeActivity();
             this.JeżeliJestTreśćDoWysłania = new System.Workflow.Activities.IfElseActivity();
-            this.PrzygotwanieTreściDoWysyłki = new System.Workflow.Activities.ParallelActivity();
+            this.RozliczenieGodzinSerwisowych = new System.Workflow.Activities.SequenceActivity();
             this.logKlient = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.cmdZainicjujRozliczenieKlienta = new System.Workflow.Activities.CodeActivity();
             this.faultHandlerActivity1 = new System.Workflow.ComponentModel.FaultHandlerActivity();
@@ -109,7 +109,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.sendReport = new Microsoft.SharePoint.WorkflowActions.SendEmail();
             this.whileKlient = new System.Workflow.Activities.WhileActivity();
             this.getListaKlientow = new System.Workflow.Activities.CodeActivity();
-            this.cmdZainicjujRaportDlaAdmina = new System.Workflow.Activities.CodeActivity();
+            this.logTargetDate = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.onWorkflowActivated1 = new Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated();
             // 
             // cmdPrzygotujTresc_P_D
@@ -205,6 +205,31 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.cmdAktualizujSygnature.Name = "cmdAktualizujSygnature";
             this.cmdAktualizujSygnature.ExecuteCode += new System.EventHandler(this.cmdAktualizujSygnature_ExecuteCode);
             // 
+            // RaportowanieWynikuDlaProjektu
+            // 
+            this.RaportowanieWynikuDlaProjektu.Activities.Add(this.cmdZainicjujRozliczenieProjektu);
+            this.RaportowanieWynikuDlaProjektu.Activities.Add(this.OkreślRodzajRaportu_P);
+            this.RaportowanieWynikuDlaProjektu.Name = "RaportowanieWynikuDlaProjektu";
+            // 
+            // Else_TrybTestowy
+            // 
+            this.Else_TrybTestowy.Activities.Add(this.cmdZmodyfikujOdiorcow);
+            this.Else_TrybTestowy.Activities.Add(this.cmdAktualizujSygnature_TrybTestowy);
+            this.Else_TrybTestowy.Name = "Else_TrybTestowy";
+            // 
+            // ifTrybProdukcyjny
+            // 
+            this.ifTrybProdukcyjny.Activities.Add(this.cmdAktualizujSygnature);
+            codecondition1.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isTrybProdukcyjny);
+            this.ifTrybProdukcyjny.Condition = codecondition1;
+            this.ifTrybProdukcyjny.Name = "ifTrybProdukcyjny";
+            // 
+            // whileProjekt
+            // 
+            this.whileProjekt.Activities.Add(this.RaportowanieWynikuDlaProjektu);
+            this.whileProjekt.Condition = null;
+            this.whileProjekt.Name = "whileProjekt";
+            // 
             // logRodzajRaportuS3
             // 
             this.logRodzajRaportuS3.Duration = System.TimeSpan.Parse("-10675199.02:48:05.4775808");
@@ -262,54 +287,10 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.cmdPrzygotujTresc_S_M.Name = "cmdPrzygotujTresc_S_M";
             this.cmdPrzygotujTresc_S_M.ExecuteCode += new System.EventHandler(this.cmdPrzygotujTresc_S_M_ExecuteCode);
             // 
-            // RaportowanieWynikuDlaProjektu
+            // cmdUpdateAdminReport
             // 
-            this.RaportowanieWynikuDlaProjektu.Activities.Add(this.cmdZainicjujRozliczenieProjektu);
-            this.RaportowanieWynikuDlaProjektu.Activities.Add(this.OkreślRodzajRaportu_P);
-            this.RaportowanieWynikuDlaProjektu.Name = "RaportowanieWynikuDlaProjektu";
-            // 
-            // Else_TrybTestowy
-            // 
-            this.Else_TrybTestowy.Activities.Add(this.cmdZmodyfikujOdiorcow);
-            this.Else_TrybTestowy.Activities.Add(this.cmdAktualizujSygnature_TrybTestowy);
-            this.Else_TrybTestowy.Name = "Else_TrybTestowy";
-            // 
-            // ifTrybProdukcyjny
-            // 
-            this.ifTrybProdukcyjny.Activities.Add(this.cmdAktualizujSygnature);
-            codecondition1.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isTrybProdukcyjny);
-            this.ifTrybProdukcyjny.Condition = codecondition1;
-            this.ifTrybProdukcyjny.Name = "ifTrybProdukcyjny";
-            // 
-            // ifRaport_S_Dzienny
-            // 
-            this.ifRaport_S_Dzienny.Activities.Add(this.cmdPrzygotujTresc_S_D);
-            this.ifRaport_S_Dzienny.Activities.Add(this.logRodzajRaportuS3);
-            codecondition2.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isRaport_S_Dzienny);
-            this.ifRaport_S_Dzienny.Condition = codecondition2;
-            this.ifRaport_S_Dzienny.Name = "ifRaport_S_Dzienny";
-            // 
-            // ifRaport_S_Tygodniowy
-            // 
-            this.ifRaport_S_Tygodniowy.Activities.Add(this.cmdPrzygotujTresc_S_T);
-            this.ifRaport_S_Tygodniowy.Activities.Add(this.logRodzajRaportuS2);
-            codecondition3.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isRaport_S_Tygodniowy);
-            this.ifRaport_S_Tygodniowy.Condition = codecondition3;
-            this.ifRaport_S_Tygodniowy.Name = "ifRaport_S_Tygodniowy";
-            // 
-            // ifRaport_S_Miesieczny
-            // 
-            this.ifRaport_S_Miesieczny.Activities.Add(this.cmdPrzygotujTresc_S_M);
-            this.ifRaport_S_Miesieczny.Activities.Add(this.logRodzajRaportuS);
-            codecondition4.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isRaport_S_Miesieczny);
-            this.ifRaport_S_Miesieczny.Condition = codecondition4;
-            this.ifRaport_S_Miesieczny.Name = "ifRaport_S_Miesieczny";
-            // 
-            // whileProjekt
-            // 
-            this.whileProjekt.Activities.Add(this.RaportowanieWynikuDlaProjektu);
-            this.whileProjekt.Condition = null;
-            this.whileProjekt.Name = "whileProjekt";
+            this.cmdUpdateAdminReport.Name = "cmdUpdateAdminReport";
+            this.cmdUpdateAdminReport.ExecuteCode += new System.EventHandler(this.cmdUpdateAdminReport_ExecuteCode);
             // 
             // logWiadomoscWyslana
             // 
@@ -359,13 +340,6 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.cmdPrzygotujWiadomosc.Name = "cmdPrzygotujWiadomosc";
             this.cmdPrzygotujWiadomosc.ExecuteCode += new System.EventHandler(this.cmdPrzygotujWiadomosc_ExecuteCode);
             // 
-            // OkreślRodzajRaportu_S
-            // 
-            this.OkreślRodzajRaportu_S.Activities.Add(this.ifRaport_S_Miesieczny);
-            this.OkreślRodzajRaportu_S.Activities.Add(this.ifRaport_S_Tygodniowy);
-            this.OkreślRodzajRaportu_S.Activities.Add(this.ifRaport_S_Dzienny);
-            this.OkreślRodzajRaportu_S.Name = "OkreślRodzajRaportu_S";
-            // 
             // sekObsługaProjektu
             // 
             this.sekObsługaProjektu.Activities.Add(this.whileProjekt);
@@ -375,32 +349,55 @@ namespace Workflows.swfWyslijZestawienieGodzin
             // 
             this.cmdListaProjektowByKlient.Name = "cmdListaProjektowByKlient";
             // 
+            // ifRaport_S_Dzienny
+            // 
+            this.ifRaport_S_Dzienny.Activities.Add(this.cmdPrzygotujTresc_S_D);
+            this.ifRaport_S_Dzienny.Activities.Add(this.logRodzajRaportuS3);
+            codecondition2.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isRaport_S_Dzienny);
+            this.ifRaport_S_Dzienny.Condition = codecondition2;
+            this.ifRaport_S_Dzienny.Name = "ifRaport_S_Dzienny";
+            // 
+            // ifRaport_S_Tygodniowy
+            // 
+            this.ifRaport_S_Tygodniowy.Activities.Add(this.cmdPrzygotujTresc_S_T);
+            this.ifRaport_S_Tygodniowy.Activities.Add(this.logRodzajRaportuS2);
+            codecondition3.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isRaport_S_Tygodniowy);
+            this.ifRaport_S_Tygodniowy.Condition = codecondition3;
+            this.ifRaport_S_Tygodniowy.Name = "ifRaport_S_Tygodniowy";
+            // 
+            // ifRaport_S_Miesieczny
+            // 
+            this.ifRaport_S_Miesieczny.Activities.Add(this.cmdPrzygotujTresc_S_M);
+            this.ifRaport_S_Miesieczny.Activities.Add(this.logRodzajRaportuS);
+            codecondition4.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isRaport_S_Miesieczny);
+            this.ifRaport_S_Miesieczny.Condition = codecondition4;
+            this.ifRaport_S_Miesieczny.Name = "ifRaport_S_Miesieczny";
+            // 
             // ifTrescDoWyslania
             // 
             this.ifTrescDoWyslania.Activities.Add(this.cmdPrzygotujWiadomosc);
             this.ifTrescDoWyslania.Activities.Add(this.OkreśćTrybPracy);
             this.ifTrescDoWyslania.Activities.Add(this.sendRaportDoKlienta);
             this.ifTrescDoWyslania.Activities.Add(this.logWiadomoscWyslana);
+            this.ifTrescDoWyslania.Activities.Add(this.cmdUpdateAdminReport);
             codecondition5.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.isTrescDoWyslania);
             this.ifTrescDoWyslania.Condition = codecondition5;
             this.ifTrescDoWyslania.Description = "isTrescDoWyslania";
             this.ifTrescDoWyslania.Name = "ifTrescDoWyslania";
             // 
-            // sequenceActivity1
+            // RozliczenieGodzinProjektowych
             // 
-            this.sequenceActivity1.Name = "sequenceActivity1";
+            this.RozliczenieGodzinProjektowych.Activities.Add(this.cmdListaProjektowByKlient);
+            this.RozliczenieGodzinProjektowych.Activities.Add(this.sekObsługaProjektu);
+            this.RozliczenieGodzinProjektowych.Enabled = false;
+            this.RozliczenieGodzinProjektowych.Name = "RozliczenieGodzinProjektowych";
             // 
-            // seqRozliczenieGodzinSerwisowych
+            // OkreślRodzajRaportu_S
             // 
-            this.seqRozliczenieGodzinSerwisowych.Activities.Add(this.OkreślRodzajRaportu_S);
-            this.seqRozliczenieGodzinSerwisowych.Name = "seqRozliczenieGodzinSerwisowych";
-            // 
-            // seqRozliczenieGodzinProjektowych
-            // 
-            this.seqRozliczenieGodzinProjektowych.Activities.Add(this.cmdListaProjektowByKlient);
-            this.seqRozliczenieGodzinProjektowych.Activities.Add(this.sekObsługaProjektu);
-            this.seqRozliczenieGodzinProjektowych.Enabled = false;
-            this.seqRozliczenieGodzinProjektowych.Name = "seqRozliczenieGodzinProjektowych";
+            this.OkreślRodzajRaportu_S.Activities.Add(this.ifRaport_S_Miesieczny);
+            this.OkreślRodzajRaportu_S.Activities.Add(this.ifRaport_S_Tygodniowy);
+            this.OkreślRodzajRaportu_S.Activities.Add(this.ifRaport_S_Dzienny);
+            this.OkreślRodzajRaportu_S.Name = "OkreślRodzajRaportu_S";
             // 
             // logErrorMessage
             // 
@@ -424,12 +421,11 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.JeżeliJestTreśćDoWysłania.Activities.Add(this.ifTrescDoWyslania);
             this.JeżeliJestTreśćDoWysłania.Name = "JeżeliJestTreśćDoWysłania";
             // 
-            // PrzygotwanieTreściDoWysyłki
+            // RozliczenieGodzinSerwisowych
             // 
-            this.PrzygotwanieTreściDoWysyłki.Activities.Add(this.seqRozliczenieGodzinProjektowych);
-            this.PrzygotwanieTreściDoWysyłki.Activities.Add(this.seqRozliczenieGodzinSerwisowych);
-            this.PrzygotwanieTreściDoWysyłki.Activities.Add(this.sequenceActivity1);
-            this.PrzygotwanieTreściDoWysyłki.Name = "PrzygotwanieTreściDoWysyłki";
+            this.RozliczenieGodzinSerwisowych.Activities.Add(this.OkreślRodzajRaportu_S);
+            this.RozliczenieGodzinSerwisowych.Activities.Add(this.RozliczenieGodzinProjektowych);
+            this.RozliczenieGodzinSerwisowych.Name = "RozliczenieGodzinSerwisowych";
             // 
             // logKlient
             // 
@@ -461,7 +457,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
             // 
             this.RaportowanieWynikówDlaKlienta.Activities.Add(this.cmdZainicjujRozliczenieKlienta);
             this.RaportowanieWynikówDlaKlienta.Activities.Add(this.logKlient);
-            this.RaportowanieWynikówDlaKlienta.Activities.Add(this.PrzygotwanieTreściDoWysyłki);
+            this.RaportowanieWynikówDlaKlienta.Activities.Add(this.RozliczenieGodzinSerwisowych);
             this.RaportowanieWynikówDlaKlienta.Activities.Add(this.JeżeliJestTreśćDoWysłania);
             this.RaportowanieWynikówDlaKlienta.Name = "RaportowanieWynikówDlaKlienta";
             // 
@@ -504,28 +500,35 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.getListaKlientow.Name = "getListaKlientow";
             this.getListaKlientow.ExecuteCode += new System.EventHandler(this.getListaKlientow_ExecuteCode);
             // 
-            // cmdZainicjujRaportDlaAdmina
+            // logTargetDate
             // 
-            this.cmdZainicjujRaportDlaAdmina.Name = "cmdZainicjujRaportDlaAdmina";
-            this.cmdZainicjujRaportDlaAdmina.ExecuteCode += new System.EventHandler(this.cmdZainicjujRaportDlaAdmina_ExecuteCode);
-            activitybind21.Name = "swfWyslijZestawienieGodzin";
-            activitybind21.Path = "workflowId";
+            this.logTargetDate.Duration = System.TimeSpan.Parse("-10675199.02:48:05.4775808");
+            this.logTargetDate.EventId = Microsoft.SharePoint.Workflow.SPWorkflowHistoryEventType.WorkflowComment;
+            this.logTargetDate.HistoryDescription = "TargetDate";
+            activitybind20.Name = "swfWyslijZestawienieGodzin";
+            activitybind20.Path = "logTargetDate_HistoryOutcome";
+            this.logTargetDate.Name = "logTargetDate";
+            this.logTargetDate.OtherData = "";
+            this.logTargetDate.UserId = -1;
+            this.logTargetDate.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryOutcomeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            activitybind22.Name = "swfWyslijZestawienieGodzin";
+            activitybind22.Path = "workflowId";
             // 
             // onWorkflowActivated1
             // 
             this.onWorkflowActivated1.CorrelationToken = correlationtoken1;
             this.onWorkflowActivated1.EventName = "OnWorkflowActivated";
             this.onWorkflowActivated1.Name = "onWorkflowActivated1";
-            activitybind20.Name = "swfWyslijZestawienieGodzin";
-            activitybind20.Path = "workflowProperties";
+            activitybind21.Name = "swfWyslijZestawienieGodzin";
+            activitybind21.Path = "workflowProperties";
             this.onWorkflowActivated1.Invoked += new System.EventHandler<System.Workflow.Activities.ExternalDataEventArgs>(this.onWorkflowActivated1_Invoked);
-            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
-            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
+            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
             // 
             // swfWyslijZestawienieGodzin
             // 
             this.Activities.Add(this.onWorkflowActivated1);
-            this.Activities.Add(this.cmdZainicjujRaportDlaAdmina);
+            this.Activities.Add(this.logTargetDate);
             this.Activities.Add(this.getListaKlientow);
             this.Activities.Add(this.whileKlient);
             this.Activities.Add(this.sendReport);
@@ -536,6 +539,14 @@ namespace Workflows.swfWyslijZestawienieGodzin
         }
 
         #endregion
+
+        private SequenceActivity RozliczenieGodzinProjektowych;
+
+        private SequenceActivity RozliczenieGodzinSerwisowych;
+
+        private CodeActivity cmdUpdateAdminReport;
+
+        private Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity logTargetDate;
 
         private Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity logRodzajRaportuS3;
 
@@ -617,15 +628,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
 
         private IfElseBranchActivity ifTrescDoWyslania;
 
-        private SequenceActivity sequenceActivity1;
-
-        private SequenceActivity seqRozliczenieGodzinSerwisowych;
-
-        private SequenceActivity seqRozliczenieGodzinProjektowych;
-
         private IfElseActivity JeżeliJestTreśćDoWysłania;
-
-        private ParallelActivity PrzygotwanieTreściDoWysyłki;
 
         private Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity logKlient;
 
@@ -645,11 +648,17 @@ namespace Workflows.swfWyslijZestawienieGodzin
 
         private CodeActivity getListaKlientow;
 
-        private CodeActivity cmdZainicjujRaportDlaAdmina;
-
         private Microsoft.SharePoint.WorkflowActions.SendEmail sendReport;
 
         private Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated onWorkflowActivated1;
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,5 @@
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\DAL\bin\Release\STAFix24.rawcom.DAL.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\DAL\bin\Release\STAFix24.rawcom.DAL.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\DAL\obj\Release\STAFix24.rawcom.DAL.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\DAL\obj\Release\STAFix24.rawcom.DAL.pdb

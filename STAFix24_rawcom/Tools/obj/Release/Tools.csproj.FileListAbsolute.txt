@@ -1,0 +1,5 @@
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\bin\Release\STAFix24.rawcom.Tools.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\bin\Release\STAFix24.rawcom.Tools.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\obj\Release\STAFix24.rawcom.Tools.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\obj\Release\STAFix24.rawcom.Tools.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\Tools\obj\Release\Tools.csprojResolveAssemblyReference.cache

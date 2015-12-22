@@ -1,0 +1,9 @@
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\bin\Release\STAFix24.rawcom.Workflows.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\bin\Release\STAFix24.rawcom.Workflows.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\obj\Release\Workflows.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\obj\Release\STAFix24.rawcom.Workflows.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\obj\Release\STAFix24.rawcom.Workflows.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\bin\Release\STAFix24.rawcom.DAL.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\bin\Release\STAFix24.rawcom.Tools.dll
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\bin\Release\STAFix24.rawcom.DAL.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\Workflows\bin\Release\STAFix24.rawcom.Tools.pdb

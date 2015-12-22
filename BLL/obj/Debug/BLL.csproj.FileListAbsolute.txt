@@ -2,3 +2,4 @@ C:\Users\Administrator\Documents\GitHub\rawcom\BLL\bin\Debug\STAFix24.rawcom.BLL
 C:\Users\Administrator\Documents\GitHub\rawcom\BLL\bin\Debug\STAFix24.rawcom.BLL.pdb
 C:\Users\Administrator\Documents\GitHub\rawcom\BLL\obj\Debug\STAFix24.rawcom.BLL.dll
 C:\Users\Administrator\Documents\GitHub\rawcom\BLL\obj\Debug\STAFix24.rawcom.BLL.pdb
+C:\Users\Administrator\Documents\GitHub\rawcom\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache

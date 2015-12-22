@@ -9,6 +9,6 @@
   </Assemblies>
   <FeatureManifests>
     <FeatureManifest Location="STAFix24_rawcom_Workflows\Feature.xml" />
-    <FeatureManifest Location="STAFix24_rawcom_TimerJob_WyslijZestawienieGodzin\Feature.xml" />
+    <FeatureManifest Location="STAFix24_rawcom_TimerJobs\Feature.xml" />
   </FeatureManifests>
 </Solution>
