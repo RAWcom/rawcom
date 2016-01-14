@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="c8b63860-81f3-4d02-9689-7e6960065a9b" solutionId="c8b63860-81f3-4d02-9689-7e6960065a9b" resetWebServer="false" name="STAFix24_rawcom" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <projectOutputAssembly location="STAFix24.rawcom.DAL.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\DAL\DAL.csproj" />
+    <projectOutputAssembly location="STAFix24.rawcom.Tools.dll" deploymentTarget="GlobalAssemblyCache" projectPath="..\Tools\Tools.csproj" />
+  </assemblies>
+  <features>
+    <featureReference itemId="629e27cf-eb18-44b2-b183-c80d066fe595" />
+    <featureReference itemId="d2e4912e-db32-464f-a2d1-dd50080a8524" />
+  </features>
+</package>

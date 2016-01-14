@@ -40,21 +40,22 @@ namespace Workflows.swfWyslijZestawienieGodzin
             System.Workflow.ComponentModel.ActivityBind activitybind10 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind11 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind12 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind15 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind16 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind17 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind18 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind19 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.CodeCondition codecondition6 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind20 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.ComponentModel.ActivityBind activitybind22 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition6 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind21 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind23 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind22 = new System.Workflow.ComponentModel.ActivityBind();
             this.cmdPrzygotujTresc_P_D = new System.Workflow.Activities.CodeActivity();
             this.cmdUstawTytulSekcji_P_D = new System.Workflow.Activities.CodeActivity();
             this.cmdPrzygotujTresc_P_T = new System.Workflow.Activities.CodeActivity();
@@ -87,6 +88,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.cmdUpdateAdminReport = new System.Workflow.Activities.CodeActivity();
             this.logWiadomoscWyslana = new Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity();
             this.sendRaportDoKlienta = new Microsoft.SharePoint.WorkflowActions.SendEmail();
+            this.SendMail = new System.Workflow.Activities.CodeActivity();
             this.OkreśćTrybPracy = new System.Workflow.Activities.IfElseActivity();
             this.cmdPrzygotujWiadomosc = new System.Workflow.Activities.CodeActivity();
             this.sekObsługaProjektu = new System.Workflow.Activities.SequenceActivity();
@@ -105,7 +107,9 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.cmdZainicjujRozliczenieKlienta = new System.Workflow.Activities.CodeActivity();
             this.faultHandlerActivity1 = new System.Workflow.ComponentModel.FaultHandlerActivity();
             this.RaportowanieWynikówDlaKlienta = new System.Workflow.Activities.SequenceActivity();
+            this.cancellationHandlerActivity1 = new System.Workflow.ComponentModel.CancellationHandlerActivity();
             this.faultHandlersActivity1 = new System.Workflow.ComponentModel.FaultHandlersActivity();
+            this.logWorkflowCompleted = new System.Workflow.Activities.CodeActivity();
             this.sendReport = new Microsoft.SharePoint.WorkflowActions.SendEmail();
             this.whileKlient = new System.Workflow.Activities.WhileActivity();
             this.getListaKlientow = new System.Workflow.Activities.CodeActivity();
@@ -314,20 +318,29 @@ namespace Workflows.swfWyslijZestawienieGodzin
             correlationtoken1.Name = "workflowToken";
             correlationtoken1.OwnerActivityName = "swfWyslijZestawienieGodzin";
             this.sendRaportDoKlienta.CorrelationToken = correlationtoken1;
+            this.sendRaportDoKlienta.Enabled = false;
             activitybind10.Name = "swfWyslijZestawienieGodzin";
             activitybind10.Path = "msgFrom";
-            this.sendRaportDoKlienta.Headers = null;
+            activitybind11.Name = "swfWyslijZestawienieGodzin";
+            activitybind11.Path = "msgHeaders";
             this.sendRaportDoKlienta.IncludeStatus = false;
             this.sendRaportDoKlienta.Name = "sendRaportDoKlienta";
-            activitybind11.Name = "swfWyslijZestawienieGodzin";
-            activitybind11.Path = "msgSubject";
             activitybind12.Name = "swfWyslijZestawienieGodzin";
-            activitybind12.Path = "msgTo";
+            activitybind12.Path = "msgSubject";
+            activitybind13.Name = "swfWyslijZestawienieGodzin";
+            activitybind13.Path = "msgTo";
+            this.sendRaportDoKlienta.MethodInvoking += new System.EventHandler(this.sendRaportDoKlienta_MethodInvoking);
             this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
-            this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.ToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
-            this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
+            this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.ToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
+            this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
             this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.FromProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
             this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.BCCProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind8)));
+            this.sendRaportDoKlienta.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.HeadersProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
+            // 
+            // SendMail
+            // 
+            this.SendMail.Name = "SendMail";
+            this.SendMail.ExecuteCode += new System.EventHandler(this.SendMail_ExecuteCode);
             // 
             // OkreśćTrybPracy
             // 
@@ -377,6 +390,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
             // 
             this.ifTrescDoWyslania.Activities.Add(this.cmdPrzygotujWiadomosc);
             this.ifTrescDoWyslania.Activities.Add(this.OkreśćTrybPracy);
+            this.ifTrescDoWyslania.Activities.Add(this.SendMail);
             this.ifTrescDoWyslania.Activities.Add(this.sendRaportDoKlienta);
             this.ifTrescDoWyslania.Activities.Add(this.logWiadomoscWyslana);
             this.ifTrescDoWyslania.Activities.Add(this.cmdUpdateAdminReport);
@@ -403,13 +417,13 @@ namespace Workflows.swfWyslijZestawienieGodzin
             // 
             this.logErrorMessage.Duration = System.TimeSpan.Parse("-10675199.02:48:05.4775808");
             this.logErrorMessage.EventId = Microsoft.SharePoint.Workflow.SPWorkflowHistoryEventType.WorkflowComment;
-            activitybind13.Name = "swfWyslijZestawienieGodzin";
-            activitybind13.Path = "logErrorMessage_HistoryDescription";
+            activitybind14.Name = "swfWyslijZestawienieGodzin";
+            activitybind14.Path = "logErrorMessage_HistoryDescription";
             this.logErrorMessage.HistoryOutcome = "";
             this.logErrorMessage.Name = "logErrorMessage";
             this.logErrorMessage.OtherData = "";
             this.logErrorMessage.UserId = -1;
-            this.logErrorMessage.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryDescriptionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
+            this.logErrorMessage.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryDescriptionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
             // 
             // cmdErrorHandler
             // 
@@ -431,15 +445,15 @@ namespace Workflows.swfWyslijZestawienieGodzin
             // 
             this.logKlient.Duration = System.TimeSpan.Parse("-10675199.02:48:05.4775808");
             this.logKlient.EventId = Microsoft.SharePoint.Workflow.SPWorkflowHistoryEventType.WorkflowComment;
-            activitybind14.Name = "swfWyslijZestawienieGodzin";
-            activitybind14.Path = "logKlient_HistoryDescription";
             activitybind15.Name = "swfWyslijZestawienieGodzin";
-            activitybind15.Path = "logKlient_HistoryOutcome";
+            activitybind15.Path = "logKlient_HistoryDescription";
+            activitybind16.Name = "swfWyslijZestawienieGodzin";
+            activitybind16.Path = "logKlient_HistoryOutcome";
             this.logKlient.Name = "logKlient";
             this.logKlient.OtherData = "";
             this.logKlient.UserId = -1;
-            this.logKlient.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryDescriptionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
-            this.logKlient.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryOutcomeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
+            this.logKlient.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryDescriptionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
+            this.logKlient.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryOutcomeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
             // 
             // cmdZainicjujRozliczenieKlienta
             // 
@@ -461,32 +475,41 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.RaportowanieWynikówDlaKlienta.Activities.Add(this.JeżeliJestTreśćDoWysłania);
             this.RaportowanieWynikówDlaKlienta.Name = "RaportowanieWynikówDlaKlienta";
             // 
+            // cancellationHandlerActivity1
+            // 
+            this.cancellationHandlerActivity1.Name = "cancellationHandlerActivity1";
+            // 
             // faultHandlersActivity1
             // 
             this.faultHandlersActivity1.Activities.Add(this.faultHandlerActivity1);
             this.faultHandlersActivity1.Name = "faultHandlersActivity1";
             // 
+            // logWorkflowCompleted
+            // 
+            this.logWorkflowCompleted.Name = "logWorkflowCompleted";
+            this.logWorkflowCompleted.ExecuteCode += new System.EventHandler(this.logWorkflowCompleted_ExecuteCode);
+            // 
             // sendReport
             // 
             this.sendReport.BCC = null;
-            activitybind16.Name = "swfWyslijZestawienieGodzin";
-            activitybind16.Path = "msgBody";
+            activitybind17.Name = "swfWyslijZestawienieGodzin";
+            activitybind17.Path = "msgBody";
             this.sendReport.CC = null;
             this.sendReport.CorrelationToken = correlationtoken1;
-            activitybind17.Name = "swfWyslijZestawienieGodzin";
-            activitybind17.Path = "msgFrom";
+            activitybind18.Name = "swfWyslijZestawienieGodzin";
+            activitybind18.Path = "msgFrom";
             this.sendReport.Headers = null;
             this.sendReport.IncludeStatus = false;
             this.sendReport.Name = "sendReport";
-            activitybind18.Name = "swfWyslijZestawienieGodzin";
-            activitybind18.Path = "msgSubject";
             activitybind19.Name = "swfWyslijZestawienieGodzin";
-            activitybind19.Path = "msgTo";
+            activitybind19.Path = "msgSubject";
+            activitybind20.Name = "swfWyslijZestawienieGodzin";
+            activitybind20.Path = "msgTo";
             this.sendReport.MethodInvoking += new System.EventHandler(this.sendReport_MethodInvoking);
-            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.ToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
-            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
-            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.FromProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
-            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
+            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.ToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.SubjectProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
+            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.FromProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
+            this.sendReport.SetBinding(Microsoft.SharePoint.WorkflowActions.SendEmail.BodyProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
             // 
             // whileKlient
             // 
@@ -505,25 +528,25 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.logTargetDate.Duration = System.TimeSpan.Parse("-10675199.02:48:05.4775808");
             this.logTargetDate.EventId = Microsoft.SharePoint.Workflow.SPWorkflowHistoryEventType.WorkflowComment;
             this.logTargetDate.HistoryDescription = "TargetDate";
-            activitybind20.Name = "swfWyslijZestawienieGodzin";
-            activitybind20.Path = "logTargetDate_HistoryOutcome";
+            activitybind21.Name = "swfWyslijZestawienieGodzin";
+            activitybind21.Path = "logTargetDate_HistoryOutcome";
             this.logTargetDate.Name = "logTargetDate";
             this.logTargetDate.OtherData = "";
             this.logTargetDate.UserId = -1;
-            this.logTargetDate.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryOutcomeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
-            activitybind22.Name = "swfWyslijZestawienieGodzin";
-            activitybind22.Path = "workflowId";
+            this.logTargetDate.SetBinding(Microsoft.SharePoint.WorkflowActions.LogToHistoryListActivity.HistoryOutcomeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
+            activitybind23.Name = "swfWyslijZestawienieGodzin";
+            activitybind23.Path = "workflowId";
             // 
             // onWorkflowActivated1
             // 
             this.onWorkflowActivated1.CorrelationToken = correlationtoken1;
             this.onWorkflowActivated1.EventName = "OnWorkflowActivated";
             this.onWorkflowActivated1.Name = "onWorkflowActivated1";
-            activitybind21.Name = "swfWyslijZestawienieGodzin";
-            activitybind21.Path = "workflowProperties";
+            activitybind22.Name = "swfWyslijZestawienieGodzin";
+            activitybind22.Path = "workflowProperties";
             this.onWorkflowActivated1.Invoked += new System.EventHandler<System.Workflow.Activities.ExternalDataEventArgs>(this.onWorkflowActivated1_Invoked);
-            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
-            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
+            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind23)));
+            this.onWorkflowActivated1.SetBinding(Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated.WorkflowPropertiesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
             // 
             // swfWyslijZestawienieGodzin
             // 
@@ -532,13 +555,21 @@ namespace Workflows.swfWyslijZestawienieGodzin
             this.Activities.Add(this.getListaKlientow);
             this.Activities.Add(this.whileKlient);
             this.Activities.Add(this.sendReport);
+            this.Activities.Add(this.logWorkflowCompleted);
             this.Activities.Add(this.faultHandlersActivity1);
+            this.Activities.Add(this.cancellationHandlerActivity1);
             this.Name = "swfWyslijZestawienieGodzin";
             this.CanModifyActivities = false;
 
         }
 
         #endregion
+
+        private CancellationHandlerActivity cancellationHandlerActivity1;
+
+        private CodeActivity logWorkflowCompleted;
+
+        private CodeActivity SendMail;
 
         private SequenceActivity RozliczenieGodzinProjektowych;
 
@@ -651,6 +682,12 @@ namespace Workflows.swfWyslijZestawienieGodzin
         private Microsoft.SharePoint.WorkflowActions.SendEmail sendReport;
 
         private Microsoft.SharePoint.WorkflowActions.OnWorkflowActivated onWorkflowActivated1;
+
+
+
+
+
+
 
 
 

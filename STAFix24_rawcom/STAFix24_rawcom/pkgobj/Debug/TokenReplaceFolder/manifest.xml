@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="c8b63860-81f3-4d02-9689-7e6960065a9b" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="STAFix24.rawcom.DAL.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.Tools.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.dll" DeploymentTarget="GlobalAssemblyCache" />
+    <Assembly Location="STAFix24.rawcom.Workflows.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <FeatureManifests>
+    <FeatureManifest Location="STAFix24_rawcom_SiteWorkflows\Feature.xml" />
+    <FeatureManifest Location="STAFix24_rawcom_TimerJobs\Feature.xml" />
+  </FeatureManifests>
+</Solution>

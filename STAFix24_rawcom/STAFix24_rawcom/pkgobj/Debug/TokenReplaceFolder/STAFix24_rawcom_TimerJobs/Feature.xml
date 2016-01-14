@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Title="STAFix24_rawcom TimerJobs" Id="98876d1e-2015-46f7-bcc7-01f838d23b52" ReceiverAssembly="STAFix24.rawcom, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1072f375336c0cb1" ReceiverClass="Stafix.Features.TimerJobs.TimerJobsEventReceiver" Scope="Site"></Feature>

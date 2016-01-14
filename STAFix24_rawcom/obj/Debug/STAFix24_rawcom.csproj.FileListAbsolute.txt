@@ -3,5 +3,3 @@ C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\bin\Debug\STAFix2
 C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\obj\Debug\STAFix24.rawcom.dll
 C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\obj\Debug\STAFix24.rawcom.pdb
 C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\obj\Debug\STAFix24_rawcom.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\bin\Debug\STAFix24.rawcom.Tools.dll
-C:\Users\Administrator\Documents\GitHub\rawcom\STAFix24_rawcom\bin\Debug\STAFix24.rawcom.Tools.pdb

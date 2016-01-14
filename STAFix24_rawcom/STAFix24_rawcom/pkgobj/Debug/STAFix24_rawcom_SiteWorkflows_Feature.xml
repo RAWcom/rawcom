@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Title="STAFix24_rawcom SiteWorkflows" Id="185cfede-53ed-433a-aa75-7b2026df610a" ReceiverAssembly="STAFix24.rawcom, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1072f375336c0cb1" ReceiverClass="Stafix.Features.SiteWorkflows.WorkflowsEventReceiver" Scope="Site">
+  <ElementManifests>
+    <ElementManifest Location="swfWyslijZestawienieGodzin\Elements.xml" />
+  </ElementManifests>
+</Feature>

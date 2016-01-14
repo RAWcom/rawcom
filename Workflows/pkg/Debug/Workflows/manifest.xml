@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="693dd72c-7b2a-46a0-a083-31bc6c8c5fae" SharePointProductVersion="14.0">
+  <Assemblies>
+    <Assembly Location="STAFix24.rawcom.Workflows.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+</Solution>

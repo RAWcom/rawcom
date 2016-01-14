@@ -16,6 +16,8 @@ using Microsoft.SharePoint.Workflow;
 using Microsoft.SharePoint.WorkflowActions;
 using System.Diagnostics;
 using System.Text;
+using Microsoft.SharePoint.Utilities;
+using System.Net.Mail;
 
 namespace Workflows.swfWyslijZestawienieGodzin
 {
@@ -26,10 +28,34 @@ namespace Workflows.swfWyslijZestawienieGodzin
             InitializeComponent();
         }
 
+        // *** try produkcyjny ***
+        private bool isProductionMode = true;
+
         public Guid workflowId = default(System.Guid);
         public SPWorkflowActivationProperties workflowProperties = new SPWorkflowActivationProperties();
+        public String msgSubject = default(System.String);
+        public String msgFrom = "STAFix24 Robot<noreply@stafix24.pl>";
+        public System.Collections.Specialized.StringDictionary msgHeaders = new System.Collections.Specialized.StringDictionary();
         public String msgTo = default(System.String);
         public String msgBody = default(System.String);
+
+        public String logWiadomoscWyslana_HistoryOutcome = default(System.String);
+        public String msgCC = default(System.String);
+        public String msgBCC = default(System.String);
+        public String msgReplyTo = @"biuro@rawcom24.pl";
+        private string _BCC_EMAIL_ = "biuro@rawcom24.pl";
+        public String logTargetDate_HistoryOutcome = default(System.String);
+        private string _DEFAULT_SENDER = @"noreply@stafix24.pl";
+        private string _DEFAULT_SENDER_NAME = @"STAFix24 Robot";
+
+        public String logErrorMessage_HistoryDescription = default(System.String);
+        private string _RETURN_PATH_ = @"Biuro RAWcom <biuro@rawcom24.pl";
+
+        private string messageInfo;
+
+
+        private string _DEFAULT_RECEIPIENT_EMAIL_ = "biuro@rawcom24.pl";
+        private string _DEFAULT_SERVICE_EMAIL_ = "jacek.rawiak@hotmail.com";
 
         SPListItem kItem;
         private string report_S_Type;
@@ -50,39 +76,62 @@ namespace Workflows.swfWyslijZestawienieGodzin
 
         private Array klienci;
         private IEnumerator kEnum;
-        private string _TR_TEMPLATE_ = @"<tr valign=""top""><td style=""border: 1px solid #808080; white-space: nowrap"">[[colData]]</td><td style=""border: 1px solid #808080"">[[Title]]</td><td style=""border: 1px solid #808080; text-align: right; white-space: nowrap"">[[colCzasMin]]</td></tr>";
-        private string _TABLE_TEMPLATE_ = @"<table cellpadding=""2"" cellspacing=""0"" style=""border: 2px solid #808080; width: 100%""><tr><th style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: center; width: 5%; background-color: #CCCCCC; border-right-color: #808080;""><strong>Data rejestracji</strong></th><th style=""border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: center; background-color: #CCCCCC; border-left-color: #808080; border-right-color: #808080;""><strong>Tytuł</strong></th><th style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: center; width: 5%; background-color: #CCCCCC; border-left-color: #808080;""><strong>Czas obsługi</strong></th></tr>___TR___ <tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #CCCCCC;"">razem:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #CCCCCC;"">[[Total_CzasMin]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #E5E5E5;"">razem narastająco:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #E5E5E5;"">[[Total_Narastajaco]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #E5E5E5;"">godziny zryczałtowane:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #E5E5E5;"">[[Total_Ryczalt]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #E5E5E5;"">do rozliczenia ponad ryczałt:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #E5E5E5;"">[[Total_DoRozliczenia]]</td></tr></table>";
+        private string _TR_TEMPLATE_ = @"<tr valign=""top""><td style=""border: 1px solid #808080; white-space: nowrap"">[[colData]]</td> <td align=""left"" style=""border: 1px solid #808080"">[[Title]]</td> <td style=""border: 1px solid #808080; text-align: right; white-space: nowrap"">[[colCzasMin]]</td> </tr>";
+        private string _TABLE_TEMPLATE_ = @"<table cellpadding=""5"" cellspacing=""0"" style=""border: 2px solid #808080; width: 100%""><tr><th style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: center; width: 5%; background-color: #CCCCCC; border-right-color: #808080;""><strong>Data rejestracji</strong></th><th align=""left"" style=""border-top: 1px solid #808080; border-bottom: 1px solid #808080; background-color: #CCCCCC; border-left-color: #808080; border-right-color: #808080;""><strong>Tytuł</strong></th><th style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: center; width: 5%; background-color: #CCCCCC; border-left-color: #808080;""><strong>Czas obsługi</strong></th></tr>___TR___ <tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #CCCCCC;"">razem:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #CCCCCC;"">[[Total_CzasMin]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #E5E5E5;"">razem narastająco 
+	od początku miesiąca:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #E5E5E5;"">[[Total_Narastajaco]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #E5E5E5;"">godziny zryczałtowane 
+		w danym miesiącu:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #E5E5E5;"">[[Total_Ryczalt]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #E5E5E5;"">dodatkowe pakiety godzin:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #E5E5E5;"">[[Total_Pakiety]]</td></tr><tr><td colspan=""2"" style=""border-left: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-right-color: #808080; background-color: #CCCCCC"">do rozliczenia ponad 
+	dostępny limit godzin:</td><td style=""border-right: 1px solid #808080; border-top: 1px solid #808080; border-bottom: 1px solid #808080; text-align: right; border-left-color: #808080; background-color: #CCCCCC"">[[Total_DoRozliczenia]]</td></tr></table>";
 
         private string _MESSAGE_BODY_TEMPLATE_ = @"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01 Transitional//EN"" 
-""http://www.w3.org/TR/html4/loose.dtd""><html><head><meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" /><title>Informacja wysłana automatycznie</title><style type=""text/css"">
-  body, .mainTable { height:100% !important; width:100% !important; margin:0; padding:0; }
-  img, a img { border:0; outline:none; text-decoration:none; }
-  table, td { border-collapse:collapse; }
-  p {margin:0; padding:0; margin-bottom:0;}
-  img{-ms-interpolation-mode: bicubic;}
-  body, table, td, p, a{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%;}
-</style></head><body scroll=""auto"" style=""padding:0; margin:0; FONT-SIZE: 12px; FONT-FAMILY: Arial, Helvetica, sans-serif; cursor:auto; background:#F3F3F3""><TABLE class=mainTable cellSpacing=0 cellPadding=0 width=""100%"" bgColor=#f3f3f3><TR><TD style=""FONT-SIZE: 0px; HEIGHT: 20px; LINE-HEIGHT: 0"">
-	&nbsp;</TD></TR><TR><TD vAlign=top><TABLE style=""WIDTH: 600px; MARGIN: 0px auto"" cellSpacing=0 cellPadding=0 width=600 align=center border=0><TR><TD style=""BORDER-TOP: #dbdbdb 1px solid; BORDER-RIGHT: #dbdbdb 1px solid; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: #dbdbdb 1px solid; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #feffff""><TABLE style=""WIDTH: 100%"" cellSpacing=0 cellPadding=0 align=left><TR style=""HEIGHT: 10px""><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 1%; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 5px; TEXT-ALIGN: center; PADDING-TOP: 5px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: #feffff""><TABLE cellSpacing=0 cellPadding=0 align=center border=0><TR><TD style=""PADDING-BOTTOM: 2px; PADDING-TOP: 2px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px"" align=center><TABLE cellSpacing=0 cellPadding=0 border=0><TR><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BACKGROUND-COLOR: transparent""><A href=""http://www.stafix24.pl/home/contact""><IMG style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; DISPLAY: block; BACKGROUND-COLOR: transparent"" border=0 alt=RAWcom src=""https://mailchef.s3.amazonaws.com/uploads/785322/image/6461CB42-89B1-DDBA-6928-52502B66A62D_Image_1.png"" width=108 height=66 hspace=""0"" vspace=""0""></A></TD></TR></TABLE></TD></TR></TABLE></TD><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 99%; VERTICAL-ALIGN: middle; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 5px; TEXT-ALIGN: center; PADDING-TOP: 5px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: #feffff""><P style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 18px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #7c7c7c; MARGIN-TOP: 0px; LINE-HEIGHT: 1.3; BACKGROUND-COLOR: transparent"" align=left><STRONG><BR>[[MessageHeader]]</STRONG></P></TD></TR></TABLE></TD></TR><TR><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: #dbdbdb 1px solid; BORDER-BOTTOM: #dbdbdb 1px solid; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: #dbdbdb 1px solid; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #feffff""><TABLE style=""WIDTH: 100%"" cellSpacing=0 cellPadding=0 align=left><TR style=""HEIGHT: 20px""><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 100%; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 35px; TEXT-ALIGN: center; PADDING-TOP: 15px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: #feffff""><P style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 12px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #a7a7a7; MARGIN-TOP: 0px; LINE-HEIGHT: 1.3; BACKGROUND-COLOR: transparent"" align=left>[[MessageBody]]</P></TD></TR></TABLE></TD></TR><TR><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 1px; PADDING-TOP: 1px; PADDING-LEFT: 0px; BORDER-LEFT: medium none; PADDING-RIGHT: 0px; BACKGROUND-COLOR: transparent""><TABLE style=""WIDTH: 100%"" cellSpacing=0 cellPadding=0 align=left><TR style=""HEIGHT: 10px""><TD style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 100%; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 1px; TEXT-ALIGN: center; PADDING-TOP: 1px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: transparent""><P style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 10px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #7c7c7c; MARGIN-TOP: 0px; LINE-HEIGHT: normal; BACKGROUND-COLOR: transparent"" align=left>RAWcom Sp. z o.o., Żelazna 67 lok.13, 00-871 Warszawa, NIP 5272714236, KRS 0000509990</P><P style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 10px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #7c7c7c; MARGIN-TOP: 0px; LINE-HEIGHT: normal; BACKGROUND-COLOR: transparent"" align=left><BR><FONT style=""COLOR: #a7a7a7"">[[MessageID]]</FONT><BR></P></TD></TR></TABLE></TD></TR></TABLE></TD></TR><TR><TD style=""FONT-SIZE: 0px; HEIGHT: 8px; LINE-HEIGHT: 0"">
-	&nbsp;</TD></TR></TABLE></body></html>";
+""http://www.w3.org/TR/html4/loose.dtd""><html><head><meta content=""text/html; charset=utf-8"" http-equiv=""Content-Type"" /><title>Informacja wysłana automatycznie</title><style type=""text/css"">
+body, .mainTable {
+	height: 100% !important;
+	width: 100% !important;
+	margin: 0;
+	padding: 0;
+}
+img, a img {
+	border: 0;
+	outline: none;
+	text-decoration: none;
+}
+table, td {
+	border-collapse: collapse;
+}
+p {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 0;
+}
+img {
+	-ms-interpolation-mode: bicubic;
+}
+body, table, td, p, a {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+</style>
+</head><body scroll=""auto"" style=""padding: 0; margin: 0; FONT-SIZE: 12px; FONT-FAMILY: Arial, Helvetica, sans-serif; cursor: auto; background: #F3F3F3""><table bgcolor=""#f3f3f3"" cellpadding=""0"" cellspacing=""0"" class=""mainTable"" width=""100%""><tr><td style=""FONT-SIZE: 0px; HEIGHT: 20px; LINE-HEIGHT: 0"">
+	&nbsp;</td></tr><tr><td valign=""top""><table align=""center"" border=""0"" cellpadding=""0"" cellspacing=""0"" style=""WIDTH: 600px; MARGIN: 0px auto"" width=""600""><tr><td style=""BORDER-TOP: #dbdbdb 1px solid; BORDER-RIGHT: #dbdbdb 1px solid; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: #dbdbdb 1px solid; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #feffff""><table align=""left"" cellpadding=""0"" cellspacing=""0"" style=""WIDTH: 100%""><tr style=""HEIGHT: 10px""><td style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 1%; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 5px; TEXT-ALIGN: center; PADDING-TOP: 5px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: #feffff""><table align=""center"" border=""0"" cellpadding=""0"" cellspacing=""0""><tr><td align=""center"" style=""PADDING-BOTTOM: 2px; PADDING-TOP: 2px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px""><table border=""0"" cellpadding=""0"" cellspacing=""0""><tr><td style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BACKGROUND-COLOR: transparent""><a href=""http://www.stafix24.pl/home/contact""><img alt=""RAWcom"" border=""0"" height=""66"" hspace=""0"" src=""https://mailchef.s3.amazonaws.com/uploads/785322/image/6461CB42-89B1-DDBA-6928-52502B66A62D_Image_1.png"" style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; DISPLAY: block; BACKGROUND-COLOR: transparent"" vspace=""0"" width=""110""></a></td></tr></table></td></tr></table></td><td style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 99%; VERTICAL-ALIGN: middle; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 5px; TEXT-ALIGN: center; PADDING-TOP: 5px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: #feffff"" valign=""middle""><p align=""left"" style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 18px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #7c7c7c; MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; LINE-HEIGHT: 1.3; BACKGROUND-COLOR: transparent""><strong>[[MessageHeader]]<br></strong><span style=""font-size: small"">[[MessageSubHeader]]</span></p></td></tr></table></td></tr><tr><td style=""BORDER-TOP: medium none; BORDER-RIGHT: #dbdbdb 1px solid; BORDER-BOTTOM: #dbdbdb 1px solid; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: #dbdbdb 1px solid; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #feffff""><table align=""left"" cellpadding=""0"" cellspacing=""0"" style=""WIDTH: 100%""><tr style=""HEIGHT: 20px""><td style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 100%; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 35px; TEXT-ALIGN: center; PADDING-TOP: 15px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: #feffff""><p align=""left"" style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 12px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #a7a7a7; MARGIN-TOP: 0px; LINE-HEIGHT: 1.3; BACKGROUND-COLOR: transparent"">[[MessageBody]]</p></td></tr></table></td></tr><tr><td style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 1px; PADDING-TOP: 1px; PADDING-LEFT: 0px; BORDER-LEFT: medium none; PADDING-RIGHT: 0px; BACKGROUND-COLOR: transparent""><table align=""left"" cellpadding=""0"" cellspacing=""0"" style=""WIDTH: 100%""><tr style=""HEIGHT: 10px""><td style=""BORDER-TOP: medium none; BORDER-RIGHT: medium none; WIDTH: 100%; VERTICAL-ALIGN: top; BORDER-BOTTOM: medium none; PADDING-BOTTOM: 1px; TEXT-ALIGN: center; PADDING-TOP: 1px; PADDING-LEFT: 15px; BORDER-LEFT: medium none; PADDING-RIGHT: 15px; BACKGROUND-COLOR: transparent""><p align=""left"" style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 10px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #7c7c7c; MARGIN-TOP: 0px; LINE-HEIGHT: normal; BACKGROUND-COLOR: transparent"">RAWcom Sp. z o.o., Żelazna 67 lok.13, 00-871 Warszawa, NIP 5272714236, KRS 0000509990</p><p align=""left"" style=""MARGIN-BOTTOM: 1em; FONT-SIZE: 10px; FONT-FAMILY: Arial, Helvetica, sans-serif; COLOR: #7c7c7c; MARGIN-TOP: 0px; LINE-HEIGHT: normal; BACKGROUND-COLOR: transparent""><br><font style=""COLOR: #a7a7a7"">[[MessageID]]</font><br></p></td></tr></table></td></tr></table></td></tr><tr><td style=""FONT-SIZE: 0px; HEIGHT: 8px; LINE-HEIGHT: 0"">&nbsp;</td></tr></table></body></html>";
 
-        private string _DEFAULT_RECEIPIENT_EMAIL_ = "jacek.rawiak@hotmail.com";
-        private string messageInfo;
-        private bool isProductionMode = false;
 
         private void sendReport_MethodInvoking(object sender, EventArgs e)
         {
             msgBody = string.Format("<h3>Wykonano raport dla:</h3><ul>{0}</ul>", sbAdamin.ToString());
             msgSubject = string.Format("Zestawienie Godzin - podsumowanie ({0})", workflowProperties.Web.Url);
             msgTo = workflowProperties.Workflow.AuthorUser.Email;
+            if (string.IsNullOrEmpty(msgTo)) msgTo = _DEFAULT_SERVICE_EMAIL_;
         }
-
-        public String msgSubject = default(System.String);
-        public String msgFrom = "STAFix24 Robot<biuro@rawcom24.pl>";
 
         private void onWorkflowActivated1_Invoked(object sender, ExternalDataEventArgs e)
         {
-            msgFrom = workflowProperties.Site.WebApplication.OutboundMailSenderAddress;
+            Tools.Logger.LogEvent("rawcom.wyślij zestawienie godzin", "workflow started");
+
+            //msgFrom = workflowProperties.Site.WebApplication.OutboundMailSenderAddress;
             targetDate = DateTime.Today.AddDays(-1);
+            //targetDate = new DateTime(2016, 1, 8);
+            //targetDate = new DateTime(2016, 1, 10);
+            //targetDate = new DateTime(2016, 1, 31);
 
             logTargetDate_HistoryOutcome = targetDate.ToString();
 
@@ -108,7 +157,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
             }
         }
 
-        public String logErrorMessage_HistoryDescription = default(System.String);
+
 
 
 
@@ -120,7 +169,7 @@ namespace Workflows.swfWyslijZestawienieGodzin
 
             //określ tryb pracy raportu
             if (klienci.Length > 0) isProductionMode = DAL.admSetup.Get_ValueByKey(workflowProperties.Site.RootWeb, "PRODUCTION_MODE").Equals("Enabled");
-
+       
             kEnum = klienci.GetEnumerator();
         }
 
@@ -267,7 +316,10 @@ namespace Workflows.swfWyslijZestawienieGodzin
             TimeSpan gRyczalt = new TimeSpan(0, (int)(Tools.Lists.Get_Value(kItem, "colLiczbaGodzinWAbonamencie") * 60), 0);
             sb = ReplacePlaceholder(sb, "Total_Ryczalt", Tools.Lists.Format_TimeSpan(gRyczalt));
 
-            TimeSpan g = gTotal.Subtract(gRyczalt);
+            TimeSpan gPakiety = DAL.tabPakiety.Get_TotalAktywnychGodzin(targetWeb, kItem.ID, new DateTime(targetDate.Year, targetDate.Month, 1));
+            sb = ReplacePlaceholder(sb, "Total_Pakiety", Tools.Lists.Format_TimeSpan(gPakiety));
+
+            TimeSpan g = gTotal.Subtract(gRyczalt).Subtract(gPakiety);
             if (g.TotalMinutes < 0) g = new TimeSpan();
             sb = ReplacePlaceholder(sb, "Total_DoRozliczenia", Tools.Lists.Format_TimeSpan(g));
 
@@ -338,17 +390,20 @@ namespace Workflows.swfWyslijZestawienieGodzin
 
                 switch (sReportType)
                 {
-                    case SerwisReportType.S_Miesieczny:
+                    case SerwisReportType.S_Dzienny:
                         msgSubject = "::Informacja o wykorzystanych godzinach wsparcia technicznego";
                         sb = ReplacePlaceholder(sb, "MessageHeader", Get_MessageHeader());
+                        sb = ReplacePlaceholder(sb, "MessageSubHeader", Get_MessageSubHeader());
                         break;
                     case SerwisReportType.S_Tygodniowy:
                         msgSubject = "::Tygodniowe zestawienie wykorzystanych godzin wsparcia technicznego";
                         sb = ReplacePlaceholder(sb, "MessageHeader", Get_MessageHeader());
+                        sb = ReplacePlaceholder(sb, "MessageSubHeader", Get_MessageSubHeader());
                         break;
-                    case SerwisReportType.S_Dzienny:
+                    case SerwisReportType.S_Miesieczny:
                         msgSubject = "::Miesięczne zestawienie wykorzystanych godzin wsparcia technicznego";
                         sb = ReplacePlaceholder(sb, "MessageHeader", Get_MessageHeader());
+                        sb = ReplacePlaceholder(sb, "MessageSubHeader", Get_MessageSubHeader());
                         break;
                 }
 
@@ -358,11 +413,14 @@ namespace Workflows.swfWyslijZestawienieGodzin
             }
         }
 
+        private string Get_MessageSubHeader()
+        {
+            return string.Format("w/g stanu na dzień {0}", Tools.Lists.Format_Date(targetDate));
+        }
+
         private string Get_MessageHeader()
         {
-            return string.Format("Dotyczy witryny <i>{0}</i><br>w/g stanu na dzień {1}",
-                Tools.Lists.Get_Text(kItem, "colNazwaKlienta"),
-                Tools.Lists.Format_Date(targetDate));
+            return string.Format("Dotyczy witryny <i>{0}</i>", Tools.Lists.Get_Text(kItem, "colNazwaKlienta"));
         }
 
         private void isTrybProdukcyjny(object sender, ConditionalEventArgs e)
@@ -402,15 +460,39 @@ namespace Workflows.swfWyslijZestawienieGodzin
             logWiadomoscWyslana_HistoryOutcome = "Tryb testowy";
         }
 
-        public String logWiadomoscWyslana_HistoryOutcome = default(System.String);
-        public String msgBCC = default(System.String);
-        private string _BCC_EMAIL_ = "biuro@rawcom24.pl";
-        public String logTargetDate_HistoryOutcome = default(System.String);
+
 
         private void cmdUpdateAdminReport_ExecuteCode(object sender, EventArgs e)
         {
             string nazwaKlienta = Tools.Lists.Get_Text(kItem, "colNazwaKlienta");
             sbAdamin.AppendFormat(@"<li> >>> wysłany</li>");
+        }
+
+        private void sendRaportDoKlienta_MethodInvoking(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SendMail_ExecuteCode(object sender, EventArgs e)
+        {
+
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(_DEFAULT_SENDER, _DEFAULT_SENDER_NAME);
+            mail.To.Add(new MailAddress(msgTo));
+            mail.Subject = msgSubject;
+            mail.Body = msgBody;
+            mail.IsBodyHtml = true;
+            if (!string.IsNullOrEmpty(msgCC)) mail.CC.Add(new MailAddress(msgCC));
+            if (!string.IsNullOrEmpty(msgBCC)) mail.Bcc.Add(new MailAddress(msgBCC));
+            if (!string.IsNullOrEmpty(msgReplyTo)) mail.ReplyTo = new MailAddress(msgReplyTo);
+            //mail.Headers.Add("Importance", "High");
+
+            Tools.SPEmail.SendMailWithAttachment(workflowProperties.Web, mail, null);
+        }
+
+        private void logWorkflowCompleted_ExecuteCode(object sender, EventArgs e)
+        {
+            Tools.Logger.LogEvent("rawcom.wyślij zestawienie godzin", "workflow completed");
         }
 
     }

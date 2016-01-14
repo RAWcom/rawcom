@@ -21,6 +21,7 @@ namespace DAL
                             && Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
                             && Tools.Lists.Get_Date(i, "colData").Year.Equals(targetDate.Year)
                             && Tools.Lists.Get_Date(i, "colData").Month.Equals(targetDate.Month))
+                .OrderBy(i => Tools.Lists.Get_Date(i, "colData"))
                 .ToArray();
         }
 
@@ -33,7 +34,8 @@ namespace DAL
                             && Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
                             && Tools.Lists.Get_Date(i, "colData") >= startDate
                             && Tools.Lists.Get_Date(i, "colData") <= targetDate)
-                            .ToArray();
+                .OrderBy(i => Tools.Lists.Get_Date(i, "colData"))
+                .ToArray();
         }
 
         public static Array Get_ZestawienieDzienne_Serwis(SPWeb web, int klientId, DateTime targetDate)
@@ -42,7 +44,8 @@ namespace DAL
                 .Where(i => i.ContentType.Name.Equals(_CT_KARTA_PRACY_)
                             && Tools.Lists.Get_LookupId(i, "selKlient").Equals(klientId)
                             && Tools.Lists.Get_Date(i, "colData").Equals(targetDate))
-                            .ToArray();
+                .OrderBy(i => i.ID)
+                .ToArray();
         }
 
         /// <summary>
